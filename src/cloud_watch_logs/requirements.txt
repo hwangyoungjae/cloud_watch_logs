@@ -1,0 +1,4 @@
+boto3>=1.26.57
+lazy-streams>=1.0.0
+promise-keeper>=1.0.0
+python-dotenv>=0.21.1
