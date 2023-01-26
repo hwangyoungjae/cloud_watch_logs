@@ -7,7 +7,12 @@ from typing import Dict, List
 
 import boto3
 
-from .cloud_watch_logs_dto import Response, DescribeLogGroupsResponse, DescribeLogStreamsResponse
+from .cloud_watch_logs_dto import (
+    Response,
+    DescribeLogGroupsResponse,
+    DescribeLogStreamsResponse,
+    GetLogEventsResponse,
+)
 
 
 class CloudWatchLogs:
@@ -157,3 +162,29 @@ class CloudWatchLogs:
             ],
             sequenceToken=sequenceToken,
         )
+
+    def get_log_events(self, *,
+                       logGroupName: str,
+                       logGroupIdentifier: str = None,
+                       logStreamName: str,
+                       startTime: int = None,
+                       endTime: int = None,
+                       nextToken: str = None,
+                       limit: int = None,
+                       startFromHead: bool = None,
+                       unmask: bool = None,
+                       ):
+        """https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/logs.html#CloudWatchLogs.Client.get_log_events"""
+        params = {
+            'logGroupName': logGroupName,
+            'logGroupIdentifier': logGroupIdentifier,
+            'logStreamName': logStreamName,
+            'startTime': startTime,
+            'endTime': endTime,
+            'nextToken': nextToken,
+            'limit': limit,
+            'startFromHead': startFromHead,
+            'unmask': unmask,
+        }
+        result = self.client.get_log_events(**self._params_resolve(params))
+        return GetLogEventsResponse(result)
