@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 import os
+import time
 from functools import cached_property
 from typing import Dict, List
 
@@ -141,10 +143,12 @@ class CloudWatchLogs:
     def put_log_event(self, *,
                       logGroupName: str,
                       logStreamName: str,
-                      timestamp: int,
+                      timestamp: int = None,
                       message: str,
                       sequenceToken: str = None,
                       ) -> Response:
+        if timestamp is None:
+            timestamp = int(time.time() * 1000)
         return self.put_log_events(
             logGroupName=logGroupName,
             logStreamName=logStreamName,
